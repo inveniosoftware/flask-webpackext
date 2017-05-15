@@ -18,6 +18,15 @@ from flask.cli import with_appcontext
 from flask_webpackext import current_webpack
 
 
+def _run(cmd, unavailable_msg, success_msg):
+    project = current_webpack.project
+    if not hasattr(project, cmd):
+        click.secho(unavailable_msg, fg='yellow')
+    else:
+        getattr(current_webpack.project, cmd)()
+        click.secho(success_msg, fg='green')
+
+
 @click.group(chain=True)
 @with_appcontext
 def webpack():
@@ -28,15 +37,14 @@ def webpack():
 @with_appcontext
 def create():
     """Create webpack project."""
-    current_webpack.project.create()
-    click.secho('Created webpack project.', fg='green')
+    _run('create', 'Nothing to do for project.', 'Created webpack project.')
 
 
 @webpack.command()
 @with_appcontext
 def clean():
     """Remove created webpack project."""
-    current_webpack.project.clean()
+    _run('clean', 'Nothing to do for project.', 'Cleaned webpack project.')
 
 
 @webpack.command(context_settings={'ignore_unknown_options': True})
@@ -75,5 +83,5 @@ def run(script, args):
         current_webpack.project.run(script, *args)
         click.secho('Executed NPM script "{}".'.format(script), fg='green')
     except RuntimeError:
-        click.secho(
-            'Error: Invalid script name "{}".'.format(script), fg='red')
+        raise click.BadParameter(
+            '"{}" is not a valid NPM script.'.format(script))

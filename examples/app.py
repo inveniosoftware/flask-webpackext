@@ -43,10 +43,10 @@ from __future__ import absolute_import, print_function
 
 from flask import Flask, render_template
 
-from flask_webpackext import FlaskWebpackExt, WebpackProject
+from flask_webpackext import FlaskWebpackExt, WebpackTemplateProject
 
 # Create a Webpack project.
-project = WebpackProject(
+project = WebpackTemplateProject(
     __name__,
     project_folder='assets',
     config_path='build/config.json',

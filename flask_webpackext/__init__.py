@@ -11,8 +11,11 @@
 
 from __future__ import absolute_import, print_function
 
+from pywebpack import WebpackProject
+
 from .ext import FlaskWebpackExt
-from .project import WebpackProject
+from .project import WebpackBundle, WebpackBundleProject, \
+    WebpackTemplateProject
 from .proxies import current_webpack
 from .version import __version__
 
@@ -20,5 +23,8 @@ __all__ = (
     '__version__',
     'current_webpack',
     'FlaskWebpackExt',
+    'WebpackBundle',
+    'WebpackBundleProject',
     'WebpackProject',
+    'WebpackTemplateProject',
 )

@@ -15,7 +15,9 @@ from os.path import join
 
 from flask import current_app
 from flask.helpers import get_root_path
-from pywebpack import WebpackBundleProject, WebpackTemplateProject
+from pywebpack import WebpackBundle as PyWebpackBundle
+from pywebpack import WebpackBundleProject as PyWebpackBundleProject
+from pywebpack import WebpackTemplateProject as PyWebpackTemplateProject
 
 from .proxies import current_webpack
 
@@ -41,18 +43,8 @@ def flask_config():
     }
 
 
-class WebpackProject(WebpackTemplateProject):
-    """Flask webpack project."""
-
-    def __init__(self, import_name, project_folder=None, config=None,
-                 config_path=None,):
-        """Initialize project."""
-        super(WebpackProject, self).__init__(
-            None,
-            project_template=join(get_root_path(import_name), project_folder),
-            config=config or flask_config,
-            config_path=config_path,
-        )
+class _PathStorageMixin(object):
+    """Mixin class."""
 
     @property
     def path(self):
@@ -63,3 +55,43 @@ class WebpackProject(WebpackTemplateProject):
     def storage_cls(self):
         """Get storage class."""
         return current_webpack.storage_cls
+
+
+class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
+    """Flask webpack template project."""
+
+    def __init__(self, import_name, project_folder=None, config=None,
+                 config_path=None):
+        """Initialize project."""
+        super(WebpackTemplateProject, self).__init__(
+            None,
+            project_template=join(get_root_path(import_name), project_folder),
+            config=config or flask_config,
+            config_path=config_path,
+        )
+
+
+class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
+    """Flask webpack bundle project."""
+
+    def __init__(self, import_name, project_folder=None, bundles=None,
+                 config=None, config_path=None):
+        """Initialize templated folder."""
+        super(WebpackBundleProject, self).__init__(
+            None,
+            project_template=join(get_root_path(import_name), project_folder),
+            bundles=bundles,
+            config=config or flask_config,
+            config_path=config_path,
+        )
+
+
+class WebpackBundle(PyWebpackBundle):
+    """Flask webpack bundle."""
+
+    def __init__(self, import_name, folder, **kwargs):
+        """Initialize bundle."""
+        super(WebpackBundle, self).__init__(
+            join(get_root_path(import_name), folder),
+            **kwargs
+        )
