@@ -27,4 +27,6 @@ recursive-include examples *.json
 recursive-include examples *.py
 recursive-include examples *.scss
 recursive-include examples *.sh
+recursive-include tests *.js
+recursive-include tests *.json
 recursive-include tests *.py
