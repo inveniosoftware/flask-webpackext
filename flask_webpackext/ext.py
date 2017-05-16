@@ -86,7 +86,7 @@ class _FlaskWebpackExtState(object):
         if path:
             return self.manifest_loader().load(
                 join(self.app.static_folder, path))
-        return path
+        return None
 
     @property
     def project(self):
