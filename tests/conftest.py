@@ -13,6 +13,7 @@ from __future__ import absolute_import, print_function
 
 import shutil
 import tempfile
+from os import makedirs
 from os.path import dirname, join
 
 import pytest
@@ -35,13 +36,27 @@ def tmpdir():
 @pytest.fixture(scope='function')
 def instance_path(tmpdir):
     """Temporary instance path."""
-    return join(tmpdir, 'instance')
+    f = join(tmpdir, 'instance')
+    makedirs(f)
+    return f
 
 
 @pytest.fixture(scope='function')
 def static_folder(instance_path):
     """Static folder."""
-    return join(instance_path, 'static')
+    f = join(instance_path, 'static')
+    makedirs(f)
+    return f
+
+
+@pytest.fixture(scope='function')
+def manifest(static_folder):
+    """Static folder."""
+    src = join(dirname(__file__), 'manifest.json')
+    dst = join(static_folder, 'dist/manifest.json')
+    makedirs(dirname(dst))
+    shutil.copyfile(src, dst)
+    return dst
 
 
 @pytest.fixture(scope='function')
@@ -54,6 +69,19 @@ def app(instance_path, static_folder):
     )
     FlaskWebpackExt(app_)
     return app_
+
+
+@pytest.yield_fixture(scope='function')
+def appctx(app):
+    """App in application context."""
+    with app.app_context():
+        yield app
+
+
+@pytest.fixture(scope='function')
+def ext(app):
+    """Extension instance."""
+    return app.extensions['flask-webpackext']
 
 
 @pytest.fixture(scope='function')
