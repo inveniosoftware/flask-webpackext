@@ -16,11 +16,12 @@ from pywebpack import WebpackProject
 from .ext import FlaskWebpackExt
 from .project import WebpackBundle, WebpackBundleProject, \
     WebpackTemplateProject
-from .proxies import current_webpack
+from .proxies import current_webpack, current_manifest
 from .version import __version__
 
 __all__ = (
     '__version__',
+    'current_manifest',
     'current_webpack',
     'FlaskWebpackExt',
     'WebpackBundle',
