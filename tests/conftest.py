@@ -21,8 +21,8 @@ from click.testing import CliRunner
 from flask import Flask
 from flask.cli import ScriptInfo
 
-from flask_webpackext import FlaskWebpackExt, WebpackProject, \
-    WebpackTemplateProject
+from flask_webpackext import FlaskWebpackExt, WebpackBundle, \
+    WebpackBundleProject, WebpackProject, WebpackTemplateProject
 
 
 @pytest.yield_fixture(scope='function')
@@ -107,6 +107,25 @@ def project(app, project_assets_dir):
 def projecttpl(app):
     """Webpack project."""
     project = WebpackTemplateProject(__name__, 'assets')
+    app.config.update({
+        'WEBPACKEXT_PROJECT': project,
+    })
+    return project
+
+
+@pytest.fixture(scope='function')
+def bundles():
+    """Webpack bundles."""
+    return (
+        WebpackBundle(__name__, 'bundle1', entry={'app1': './app1.js'}),
+        WebpackBundle(__name__, 'bundle2', entry={'app2': './app2.js'}),
+    )
+
+
+@pytest.fixture(scope='function')
+def projectbundle(app, bundles):
+    """Webpack bundle project."""
+    project = WebpackBundleProject(__name__, 'assetsbundle', bundles=bundles)
     app.config.update({
         'WEBPACKEXT_PROJECT': project,
     })
