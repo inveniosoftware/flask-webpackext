@@ -10,7 +10,6 @@ Proxies
 .. automodule:: flask_webpackext.proxies
     :members:
 
-
 Manifest
 --------
 
@@ -22,3 +21,16 @@ Project
 
 .. automodule:: flask_webpackext.project
    :members:
+
+Bundle
+------
+
+.. automodule:: flask_webpackext.bundle
+   :members:
+
+Command Line Interface
+----------------------
+
+.. click:: flask_webpackext.cli:webpack
+   :prog: flask webpack
+   :show-nested:

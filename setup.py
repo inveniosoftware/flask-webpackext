@@ -30,6 +30,7 @@ tests_require = [
 extras_require = {
     'docs': [
         'Sphinx>=1.5.1',
+        'sphinx-click>=1.4.0',
     ],
     'tests': tests_require,
 }
@@ -45,7 +46,7 @@ setup_requires = [
 install_requires = [
     'Flask>=0.11',
     'pynpm>=0.1.1',
-    'pywebpack>=0.1.1',
+    'pywebpack>=0.1.2',
 ]
 
 packages = find_packages()

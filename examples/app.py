@@ -17,7 +17,7 @@ environment variables:
    $ pip install -e .[all]
    $ cd examples
    $ mkdir instance
-   $ export FLASK_APP=app.py FLASK_DEBUG=1
+   $ export FLASK_APP=app.py FLASK_ENV=development
 
 Next, install and build the assets with webpack:
 
@@ -61,7 +61,6 @@ app = Flask(
 # Configure application
 app.config.update(dict(
     WEBPACKEXT_PROJECT=project,
-    # WEBPACKEXT_STORAGE_CLS='pywebpack:LinkStorage',
 ))
 
 # Initialize extension
