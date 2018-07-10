@@ -19,8 +19,6 @@
 
 Webpack integration for Flask.
 
-*This is an experimental developer preview release.*
-
 Flask-WebpackExt makes it easy to interface with your existing Webpack project
 from Flask and does not try to manage Webpack for you. Flask-WebpackExt does
 this via:
@@ -36,17 +34,15 @@ this via:
   templates.
 * **CLI for NPM**: Flask-WebpackExt provides a Flask CLI so that e.g.
   ``flask webpack install`` will run ``npm install`` in your Webpack project.
-  Similarly, ``flask webpack build`` will run ``npm run build``, you just have
-  to define in your ``package.json`` if the build script should execute
-  ``webpack --config ...`` or e.g. ``node build.js``, or ...?.
+  Similarly, ``flask webpack build`` will run ``npm run build``.
 
 Optionally you can use Flask-WebpackExt to also:
 
 * **Inject configuration:** Flask-WebpackExt will write a ``config.json`` into
-  your webpack project, which you can import in your webpack configuration. You
-  define what goes in the config, but you can use to let e.g. Webpack know
-  about output paths or dynamic entry points.
-* **Collect bundles:** If you Webpack project is spread over multiple Python
+  your Webpack project, which you can import in your Webpack configuration. You
+  define what goes in the config e.g. Let Webpack know about output paths or
+  dynamic entry points.
+* **Collect bundles:** If your Webpack project is spread over multiple Python
   packages, Flask-WebpackExt can help you dynamically assemble the files into a
   Webpack project. This is useful if you don't know until runtime which
   packages are installed.

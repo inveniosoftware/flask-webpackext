@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Flask-WebpackExt
-# Copyright (C) 2017 CERN.
+# Copyright (C) 2017, 2018 CERN.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -36,7 +36,7 @@ def webpack():
 @webpack.command()
 @with_appcontext
 def create():
-    """Create webpack project."""
+    """Create webpack project. This will fetch the assets."""
     _run('create', 'Nothing to do for project.', 'Created webpack project.')
 
 
