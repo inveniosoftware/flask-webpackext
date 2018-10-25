@@ -11,6 +11,9 @@
 
 from __future__ import absolute_import, print_function
 
+from os.path import join
+
+from flask.helpers import get_root_path
 from pywebpack import WebpackBundle as PyWebpackBundle
 
 
