@@ -46,7 +46,7 @@ setup_requires = [
 install_requires = [
     'Flask>=0.11',
     'pynpm>=0.1.1',
-    'pywebpack>=0.1.2',
+    'pywebpack>=1.0.0',
 ]
 
 packages = find_packages()
