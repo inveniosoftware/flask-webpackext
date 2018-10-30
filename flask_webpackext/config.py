@@ -14,7 +14,7 @@ from __future__ import absolute_import, print_function
 WEBPACKEXT_MANIFEST_LOADER = None
 """Manifest loader use to load manfest."""
 
-WEBPACKEXT_MANIFEST_PATH = 'dist/manifest.json'
+WEBPACKEXT_MANIFEST_PATH = 'dist/asset-manifest.json'
 """Path to manifest file relative to static folder."""
 
 WEBPACKEXT_PROJECT = None
