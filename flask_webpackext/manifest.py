@@ -15,6 +15,28 @@ from flask import current_app
 from markupsafe import Markup
 from pywebpack import Manifest, ManifestEntry, ManifestLoader
 
+from .errors import ManifestKeyNotFoundError
+
+
+class JinjaManifest(Manifest):
+    """Manifest entry which marks rendered strings as safe for Jinja."""
+
+    def __getitem__(self, key):
+        """Get a manifest entry."""
+        try:
+            return super(JinjaManifest, self).__getitem__(key)
+        except KeyError:
+            raise ManifestKeyNotFoundError('Key {} not found in manifest.json'
+                                           .format(key))
+
+    def __getattr__(self, name):
+        """Get a manifest entry."""
+        try:
+            return super(JinjaManifest, self).__getattr__(name)
+        except AttributeError as e:
+            raise ManifestKeyNotFoundError('Key {} not found in manifest.json'
+                                           .format(name))
+
 
 class JinjaManifestEntry(ManifestEntry):
     """Manifest entry which marks rendered strings as safe for Jinja."""
@@ -29,7 +51,8 @@ class JinjaManifestLoader(ManifestLoader):
 
     cache = {}
 
-    def __init__(self, manifest_cls=Manifest, entry_cls=JinjaManifestEntry):
+    def __init__(self, manifest_cls=JinjaManifest,
+                 entry_cls=JinjaManifestEntry):
         """Initialize manifest loader."""
         super(JinjaManifestLoader, self).__init__(
             manifest_cls=manifest_cls,
