@@ -230,8 +230,8 @@ by using:
 
 - :class:`~bundle.WebpackBundle` to declare the needed assets and npm
   dependencies for each module.
-- :class:`~project.WebpackBundleProject` to gather all bundles under one Webpack
-  project.
+- :class:`~project.WebpackBundleProject` to gather all bundles under one
+  Webpack project.
 
 An example project with two modules could be structured as follows:
 
@@ -251,7 +251,7 @@ An example project with two modules could be structured as follows:
     index.html
   app.py
 
-Let's start with the definition of the first bundle ``bundle1``. ``bundle2`` 
+Let's start with the definition of the first bundle ``bundle1``. ``bundle2``
 would be similar:
 
 .. code-block:: python
@@ -296,9 +296,9 @@ Flask-WebpackExt now knows about the bundles, and it will add them under the
 key ``entry``::
 
     {
-        "build": {...}, 
+        "build": {...},
         "entry": {
-            "module1": "./js/module1.js", 
+            "module1": "./js/module1.js",
             "module2": "./js/module2.js"
         }
     }
