@@ -52,8 +52,8 @@ deploy:
   provider: pypi
   user: inveniosoftware
   password:
-    secure: TODO:PYPISECUREHASH
-  distributions: "compile_catalog sdist bdist_wheel"
+    secure: eCfNLB+c+gxYUaRCeONhuYEaDuUtsWSmmexV1yGS9fBa0E0BF9/jvbTyvP00C0+1KP/ZHXGI6balequMsOiYpQiQWK5/pssMCP8EkleN/jaVMi+K9x26cX25gFQOtQgPjzP8DmMWHAnc8HurLQIganw2b+Kht+m0xf0k0vSxMkmSccWWgR+14jC5JDW3BU/Un08ae4c6i1Hh1qOCDJqbimIHywN9slkszsKoniItaFFybs/ewpuRGZAl7t/EFzOzun6k9QYh0BwY16musXqUZhoARy/n4ZVyaNpdMlLJgC4K52yIbtgyiDjztggtnoLw/eZ84aeqIWV0ucDwYQxgmO/oqnB7ZoqrBW6LroY44jx7PC+31pks117Xcv745f65bfHsTK3rb0I1QyfaG/Rl4GDVjw1JIUZPO7063DkYGGzqst4mpDFYOlRHzl/wWsnoEaDajSN7HdJDCq+l1frUsEJXGs+RMb8k1zmTmFRdhs/DjkbpfcgxVS84mBTr666gj0UOmUG2Jll+PJ5JT35EAVOSKLR4/3dBjulEKvTCh8pxnINr0Hjn13XcURK+m67vhoqCJFaNsqk1QKCPpYbYK2thJiJEyJpuGvsgfH8H37LVznfMji7KQwCzhSmL/5wh/wX3LqD2wqi59dHObFxA6Bm63N2SaMVte6V60dx+UVo=
+  distributions: "sdist bdist_wheel"
   on:
     tags: true
     python: "2.7"
