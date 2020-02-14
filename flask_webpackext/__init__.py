@@ -365,7 +365,7 @@ from pywebpack import WebpackProject
 from .bundle import WebpackBundle
 from .ext import FlaskWebpackExt
 from .project import WebpackBundleProject, WebpackTemplateProject
-from .proxies import current_webpack, current_manifest
+from .proxies import current_manifest, current_webpack
 from .version import __version__
 
 __all__ = (
