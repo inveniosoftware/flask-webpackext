@@ -204,14 +204,14 @@ To run `npm install` command and download all dependencies:
 
 .. code-block:: console
 
-    $ flask webpack build
+    $ flask webpack install
 
 To run `npm run build` and execute what you have defined in the
 `package.json`:
 
 .. code-block:: console
 
-    $ flask webpack install
+    $ flask webpack build
 
 Now you can run the application and see if the assets are loaded:
 
