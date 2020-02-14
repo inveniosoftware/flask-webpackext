@@ -19,7 +19,7 @@ history = open('CHANGES.rst').read()
 tests_require = [
     'check-manifest>=0.25',
     'coverage>=4.0',
-    'isort>=4.2.2',
+    'isort>=4.3.21',
     'pydocstyle>=1.0.0',
     'pytest-cache>=1.0',
     'pytest-cov>=1.8.0',
@@ -92,6 +92,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
-        'Development Status :: 5 - Production',
+        'Development Status :: 5 - Production/Stable',
     ],
 )
