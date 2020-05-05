@@ -1,5 +1,10 @@
 Changes
 =======
+
+Version 1.0.2 (released TBD)
+
+- Stop using example app
+
 Version 1.0.1 (released 2018-12-14)
 
 - Pypi classifier and deployment configuration

@@ -61,4 +61,3 @@ target/
 .*.sw?
 
 node_modules/
-examples/instance/

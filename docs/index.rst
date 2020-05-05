@@ -12,7 +12,6 @@ Flask-WebpackExt.
    installation
    configuration
    usage
-   examplesapp
 
 
 API Reference
