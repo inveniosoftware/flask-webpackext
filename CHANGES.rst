@@ -3,6 +3,7 @@ Changes
 
 Version 1.0.2 (released TBD)
 
+- Set Sphinx ``<3`` because of errors related to application context
 - Stop using example app
 
 Version 1.0.1 (released 2018-12-14)
