@@ -56,7 +56,7 @@ To build our asset, let's create the Webpack configuration in
 
     var path = require('path');
     var config = require('./config');
-    var ManifestPlugin = require('webpack-manifest-plugin');
+    const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
     module.exports = {
         context: config.build.context,
@@ -69,7 +69,7 @@ To build our asset, let's create the Webpack configuration in
             publicPath: config.build.assetsURL
         },
         plugins: [
-            new ManifestPlugin({
+            new WebpackManifestPlugin({
                 fileName: 'manifest.json',
                 stripSrc: true,
                 publicPath: config.build.assetsURL
@@ -130,7 +130,9 @@ triggered by ``flask webpack build``:
             "jquery": "^3.2.1"
         },
         "devDependencies": {
-            "webpack-manifest-plugin": "^2.0.4"
+            "webpack": "^5.0.0",
+            "webpack-cli": "^4.7.2",
+            "webpack-manifest-plugin": "^4.0.2"
         }
     }
 
@@ -323,12 +325,12 @@ building the assets. You have to add the plugin in the ``webpack.config.js``
 to generate it::
 
     ...
-    var ManifestPlugin = require('webpack-manifest-plugin');
+    const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
     module.exports = {
         ...
         plugins: [
-            new ManifestPlugin({
+            new WebpackManifestPlugin({
                 fileName: 'manifest.json',
                 stripSrc: true,
                 publicPath: config.build.assetsURL
