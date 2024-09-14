@@ -14,7 +14,6 @@ from os.path import join
 
 from flask import current_app
 from flask.helpers import get_root_path
-from pywebpack import WebpackBundle as PyWebpackBundle
 from pywebpack import WebpackBundleProject as PyWebpackBundleProject
 from pywebpack import WebpackTemplateProject as PyWebpackTemplateProject
 

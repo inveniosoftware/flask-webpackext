@@ -12,7 +12,7 @@
 
 from os.path import join
 
-from pywebpack import FileStorage, ManifestLoader
+from pywebpack import FileStorage
 from werkzeug.utils import import_string
 
 from . import config
