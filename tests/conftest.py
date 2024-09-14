@@ -2,6 +2,7 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2017 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -128,7 +129,7 @@ def bundles():
 @pytest.fixture()
 def projectbundle(app, bundles):
     """Webpack bundle project."""
-    project = WebpackBundleProject(__name__, "assetsbundle", bundles=bundles)
+    project = WebpackBundleProject(__name__, "assetsbundle", bundles=bundles, app=app)
     app.config.update(
         {
             "WEBPACKEXT_PROJECT": project,
