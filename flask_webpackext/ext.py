@@ -2,6 +2,7 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2017 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -9,15 +10,12 @@
 
 """Webpack integration for Flask."""
 
-from __future__ import absolute_import, print_function
-
 from os.path import join
 
 from pywebpack import FileStorage, ManifestLoader
 from werkzeug.utils import import_string
 
 from . import config
-from ._compat import string_types
 from .manifest import JinjaManifestLoader
 from .proxies import current_manifest
 
@@ -72,7 +70,7 @@ class _FlaskWebpackExtState(object):
     def manifest_loader(self):
         """Manifest loader."""
         loader = self.app.config["WEBPACKEXT_MANIFEST_LOADER"]
-        if isinstance(loader, string_types):
+        if isinstance(loader, str):
             return import_string(loader)
         return loader
 
@@ -88,7 +86,7 @@ class _FlaskWebpackExtState(object):
     def project(self):
         """Webpack project."""
         project = self.app.config["WEBPACKEXT_PROJECT"]
-        if isinstance(project, string_types):
+        if isinstance(project, str):
             return import_string(project)
         return project
 
@@ -96,6 +94,6 @@ class _FlaskWebpackExtState(object):
     def storage_cls(self):
         """Default storage class."""
         cls_ = self.app.config["WEBPACKEXT_STORAGE_CLS"]
-        if isinstance(cls_, string_types):
+        if isinstance(cls_, str):
             return import_string(cls_)
         return cls_

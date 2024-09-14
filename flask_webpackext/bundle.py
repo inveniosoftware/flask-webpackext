@@ -2,14 +2,13 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2018 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
 # more details.
 
 """Webpack bundle APIs for Flask-WebpackExt."""
-
-from __future__ import absolute_import, print_function
 
 from os.path import join
 

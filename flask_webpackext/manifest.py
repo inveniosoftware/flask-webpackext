@@ -2,6 +2,7 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2017 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -9,7 +10,6 @@
 
 """Proxy to current extension."""
 
-from __future__ import absolute_import, print_function
 
 from flask import current_app
 from markupsafe import Markup
@@ -34,10 +34,9 @@ class JinjaManifest(Manifest):
         """Get a manifest entry."""
         try:
             return super(JinjaManifest, self).__getattr__(name)
-        except AttributeError as e:
-            raise ManifestKeyNotFoundError(
-                "Key {} not found in manifest.json".format(name)
-            )
+        except AttributeError:
+            msg = f"Key {name} not found in manifest.json"
+            raise ManifestKeyNotFoundError(msg)
 
 
 class JinjaManifestEntry(ManifestEntry):
