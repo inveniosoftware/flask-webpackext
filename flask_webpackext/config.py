@@ -15,7 +15,7 @@ WEBPACKEXT_MANIFEST_LOADER = None
 """Manifest loader use to load manifest. By default ``JinjaManifestLoader``.
 """
 
-WEBPACKEXT_MANIFEST_PATH = 'dist/manifest.json'
+WEBPACKEXT_MANIFEST_PATH = "dist/manifest.json"
 """Path to manifest file relative to static folder."""
 
 WEBPACKEXT_PROJECT = None

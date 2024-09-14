@@ -31,6 +31,5 @@ class WebpackBundle(PyWebpackBundle):
             :class:`pywebpack.bundle.WebpackBundle`.
         """
         super(WebpackBundle, self).__init__(
-            join(get_root_path(import_name), folder),
-            **kwargs
+            join(get_root_path(import_name), folder), **kwargs
         )

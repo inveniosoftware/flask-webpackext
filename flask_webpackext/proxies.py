@@ -14,10 +14,10 @@ from __future__ import absolute_import, print_function
 from flask import current_app
 from werkzeug.local import LocalProxy
 
-current_webpack = LocalProxy(
-    lambda: current_app.extensions['flask-webpackext'])
+current_webpack = LocalProxy(lambda: current_app.extensions["flask-webpackext"])
 """Proxy to current extension."""
 
 current_manifest = LocalProxy(
-    lambda: current_app.extensions['flask-webpackext'].manifest)
+    lambda: current_app.extensions["flask-webpackext"].manifest
+)
 """Proxy to current manifest."""

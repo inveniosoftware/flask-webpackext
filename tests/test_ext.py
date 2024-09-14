@@ -19,17 +19,18 @@ from flask_webpackext import FlaskWebpackExt
 def test_version():
     """Test version import."""
     from flask_webpackext import __version__
+
     assert __version__
 
 
 def test_init():
     """Test extension initialization."""
-    app = Flask('testapp')
+    app = Flask("testapp")
     ext = FlaskWebpackExt(app)
-    assert 'flask-webpackext' in app.extensions
+    assert "flask-webpackext" in app.extensions
 
-    app = Flask('testapp')
+    app = Flask("testapp")
     ext = FlaskWebpackExt()
-    assert 'flask-webpackext' not in app.extensions
+    assert "flask-webpackext" not in app.extensions
     ext.init_app(app)
-    assert 'flask-webpackext' in app.extensions
+    assert "flask-webpackext" in app.extensions

@@ -37,21 +37,21 @@ def flask_config():
         * ``staticPath``: Absolute path to the generated static directory.
         * ``staticURL``: URL to access the static files..
     """
-    assets_url = current_app.config['WEBPACKEXT_PROJECT_DISTURL']
-    if not assets_url.endswith('/'):
-        assets_url += '/'
+    assets_url = current_app.config["WEBPACKEXT_PROJECT_DISTURL"]
+    if not assets_url.endswith("/"):
+        assets_url += "/"
     static_url = current_app.static_url_path
-    if not static_url.endswith('/'):
-        static_url += '/'
+    if not static_url.endswith("/"):
+        static_url += "/"
 
     return {
-        'build': {
-            'debug': current_app.debug,
-            'context': current_webpack.project.path,
-            'assetsPath': current_app.config['WEBPACKEXT_PROJECT_DISTDIR'],
-            'assetsURL': assets_url,
-            'staticPath': current_app.static_folder,
-            'staticURL': static_url,
+        "build": {
+            "debug": current_app.debug,
+            "context": current_webpack.project.path,
+            "assetsPath": current_app.config["WEBPACKEXT_PROJECT_DISTDIR"],
+            "assetsURL": assets_url,
+            "staticPath": current_app.static_folder,
+            "staticURL": static_url,
         }
     }
 
@@ -62,7 +62,7 @@ class _PathStorageMixin(object):
     @property
     def path(self):
         """Get path to project."""
-        return current_app.config['WEBPACKEXT_PROJECT_BUILDDIR']
+        return current_app.config["WEBPACKEXT_PROJECT_BUILDDIR"]
 
     @property
     def storage_cls(self):
@@ -73,8 +73,7 @@ class _PathStorageMixin(object):
 class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
     """Flask webpack template project."""
 
-    def __init__(self, import_name, project_folder=None, config=None,
-                 config_path=None):
+    def __init__(self, import_name, project_folder=None, config=None, config_path=None):
         """Initialize project.
 
         :param import_name: Name of the module where the
@@ -101,8 +100,14 @@ class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
 class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
     """Flask webpack bundle project."""
 
-    def __init__(self, import_name, project_folder=None, bundles=None,
-                 config=None, config_path=None):
+    def __init__(
+        self,
+        import_name,
+        project_folder=None,
+        bundles=None,
+        config=None,
+        config_path=None,
+    ):
         """Initialize templated folder.
 
         :param import_name: Name of the module where the WebpackBundleProject
