@@ -2,6 +2,7 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2017, 2018 CERN.
+# Copyright (C) 2024 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -357,8 +358,6 @@ You can read more about it on `pywebpack`_ documentation.
 
 .. _pywebpack: https://pywebpack.readthedocs.io
 """
-
-from __future__ import absolute_import, print_function
 
 from pywebpack import WebpackProject
 
