@@ -25,35 +25,39 @@ def test_manifest_loading(appctx, ext, project, manifest):
     assert ext.manifest_loader == JinjaManifestLoader
     m = ext.manifest
     assert m.app
-    assert m['app']
+    assert m["app"]
 
 
 def test_manifest_rendering(appctx, ext, project, manifest):
     """Test manifest loading."""
-    tpl = '{{ webpack.app }}'
+    tpl = "{{ webpack.app }}"
     output = '<script src="/static/dist/app.js"></script>'
     assert render_template_string(tpl) == output
 
 
 def test_manifest_loader_conf(app, ext, project, manifest):
     """Test manifest loading."""
-    app.config.update({
-        'WEBPACKEXT_MANIFEST_LOADER': 'pywebpack:ManifestLoader',
-    })
+    app.config.update(
+        {
+            "WEBPACKEXT_MANIFEST_LOADER": "pywebpack:ManifestLoader",
+        }
+    )
     assert ext.manifest_loader == ManifestLoader
 
 
 def test_manifest_nopath(app, ext):
     """Test no manifest path."""
-    app.config['WEBPACKEXT_MANIFEST_PATH'] = None
+    app.config["WEBPACKEXT_MANIFEST_PATH"] = None
     assert ext.manifest is None
 
 
 def test_manifest_invalid_path(app, appctx, ext):
     """Test no manifest path."""
-    app.config['WEBPACKEXT_MANIFEST_PATH'] = 'invalid/path.json'
+    app.config["WEBPACKEXT_MANIFEST_PATH"] = "invalid/path.json"
 
     pytest.raises(
         FileNotFoundError if sys.version_info[0] == 3 else IOError,
-        getattr, ext, 'manifest'
+        getattr,
+        ext,
+        "manifest",
     )

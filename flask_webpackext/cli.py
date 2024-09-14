@@ -21,10 +21,10 @@ from flask_webpackext import current_webpack
 def _run(cmd, unavailable_msg, success_msg):
     project = current_webpack.project
     if not hasattr(project, cmd):
-        click.secho(unavailable_msg, fg='yellow')
+        click.secho(unavailable_msg, fg="yellow")
     else:
         getattr(current_webpack.project, cmd)()
-        click.secho(success_msg, fg='green')
+        click.secho(success_msg, fg="green")
 
 
 @click.group(chain=True)
@@ -37,32 +37,32 @@ def webpack():
 @with_appcontext
 def create():
     """Create webpack project. This will fetch the assets."""
-    _run('create', 'Nothing to do for project.', 'Created webpack project.')
+    _run("create", "Nothing to do for project.", "Created webpack project.")
 
 
 @webpack.command()
 @with_appcontext
 def clean():
     """Remove created webpack project."""
-    _run('clean', 'Nothing to do for project.', 'Cleaned webpack project.')
+    _run("clean", "Nothing to do for project.", "Cleaned webpack project.")
 
 
-@webpack.command(context_settings={'ignore_unknown_options': True})
-@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@webpack.command(context_settings={"ignore_unknown_options": True})
+@click.argument("args", nargs=-1, type=click.UNPROCESSED)
 @with_appcontext
 def install(args):
     """Run NPM install."""
     current_webpack.project.install(*args)
-    click.secho('Installed webpack project.', fg='green')
+    click.secho("Installed webpack project.", fg="green")
 
 
-@webpack.command(context_settings={'ignore_unknown_options': True})
-@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@webpack.command(context_settings={"ignore_unknown_options": True})
+@click.argument("args", nargs=-1, type=click.UNPROCESSED)
 @with_appcontext
 def build(args):
     """Run NPM build-script."""
     current_webpack.project.build(*args)
-    click.secho('Built webpack project.', fg='green')
+    click.secho("Built webpack project.", fg="green")
 
 
 @webpack.command()
@@ -70,18 +70,17 @@ def build(args):
 def buildall():
     """Create, install and build webpack project."""
     current_webpack.project.buildall()
-    click.secho('Created, installed and built webpack project.', fg='green')
+    click.secho("Created, installed and built webpack project.", fg="green")
 
 
-@webpack.command(context_settings={'ignore_unknown_options': True})
-@click.argument('script')
-@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@webpack.command(context_settings={"ignore_unknown_options": True})
+@click.argument("script")
+@click.argument("args", nargs=-1, type=click.UNPROCESSED)
 @with_appcontext
 def run(script, args):
     """Run an NPM script."""
     try:
         current_webpack.project.run(script, *args)
-        click.secho('Executed NPM script "{}".'.format(script), fg='green')
+        click.secho('Executed NPM script "{}".'.format(script), fg="green")
     except RuntimeError:
-        raise click.BadParameter(
-            '"{}" is not a valid NPM script.'.format(script))
+        raise click.BadParameter('"{}" is not a valid NPM script.'.format(script))

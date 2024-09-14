@@ -367,15 +367,15 @@ from .ext import FlaskWebpackExt
 from .project import WebpackBundleProject, WebpackTemplateProject
 from .proxies import current_manifest, current_webpack
 
-__version__ = '1.0.2'
+__version__ = "1.0.2"
 
 __all__ = (
-    '__version__',
-    'current_manifest',
-    'current_webpack',
-    'FlaskWebpackExt',
-    'WebpackBundle',
-    'WebpackBundleProject',
-    'WebpackProject',
-    'WebpackTemplateProject',
+    "__version__",
+    "current_manifest",
+    "current_webpack",
+    "FlaskWebpackExt",
+    "WebpackBundle",
+    "WebpackBundleProject",
+    "WebpackProject",
+    "WebpackTemplateProject",
 )
