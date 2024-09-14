@@ -11,10 +11,9 @@
 """CLI for Flask-WebpackExt."""
 
 import click
-from flask import current_app
 from flask.cli import with_appcontext
 
-from flask_webpackext import current_webpack
+from .proxies import current_webpack
 
 
 def _run(cmd, unavailable_msg, success_msg):
