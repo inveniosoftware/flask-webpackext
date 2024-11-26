@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2024 Graz University of Technology.
+#
+# Flask-WebpackExt is free software; you can redistribute it and/or modify
+# it under the terms of the Revised BSD License; see LICENSE file for
+# more details.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  "0 3 * * 6"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason"
+        required: false
+        default: "Manual trigger"
+
+jobs:
+  tests:
+    uses: inveniosoftware/workflows/.github/workflows/tests-python.yml@master
+    with:
+      db-service: '[""]'
+      search-service: '[""]'
