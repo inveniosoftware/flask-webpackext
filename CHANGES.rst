@@ -1,6 +1,14 @@
 Changes
 =======
 
+Version 2.0.0 (released 2024-11-28)
+
+- Project: allows passing allowed_copy_paths to copy assets when building with
+           Webpack
+- Package structure update.
+- Added ``black`` formatting.
+- Dropped Python 3.6 support.
+
 Version 1.0.2 (released 2020-05-13)
 
 - Deprecated Python versions lower than 3.6.0. Now supporting 3.6.0 and 3.7.0
