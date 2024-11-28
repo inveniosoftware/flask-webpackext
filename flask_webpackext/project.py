@@ -87,7 +87,7 @@ class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
             :func:`flask_webpackext.project.flask_config`.
         """
         project_template_dir = join(get_root_path(import_name), project_folder)
-        super(WebpackTemplateProject, self).__init__(
+        super().__init__(
             None,
             project_template_dir=project_template_dir,
             config=config or flask_config,
@@ -129,7 +129,7 @@ class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
             :func:`flask_webpackext.project.flask_config`.
         """
         project_template_dir = join(get_root_path(import_name), project_folder)
-        super(WebpackBundleProject, self).__init__(
+        super().__init__(
             None,
             project_template_dir=project_template_dir,
             bundles=bundles,

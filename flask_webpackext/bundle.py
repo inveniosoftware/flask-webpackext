@@ -29,6 +29,4 @@ class WebpackBundle(PyWebpackBundle):
         :param kwargs: Keyword arguments directly passed to
             :class:`pywebpack.bundle.WebpackBundle`.
         """
-        super(WebpackBundle, self).__init__(
-            join(get_root_path(import_name), folder), **kwargs
-        )
+        super().__init__(join(get_root_path(import_name), folder), **kwargs)

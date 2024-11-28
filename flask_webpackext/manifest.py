@@ -24,7 +24,7 @@ class JinjaManifest(Manifest):
     def __getitem__(self, key):
         """Get a manifest entry."""
         try:
-            return super(JinjaManifest, self).__getitem__(key)
+            return super().__getitem__(key)
         except KeyError:
             raise ManifestKeyNotFoundError(
                 "Key {} not found in manifest.json".format(key)
@@ -33,7 +33,7 @@ class JinjaManifest(Manifest):
     def __getattr__(self, name):
         """Get a manifest entry."""
         try:
-            return super(JinjaManifest, self).__getattr__(name)
+            return super().__getattr__(name)
         except AttributeError:
             msg = f"Key {name} not found in manifest.json"
             raise ManifestKeyNotFoundError(msg)
@@ -54,14 +54,10 @@ class JinjaManifestLoader(ManifestLoader):
 
     def __init__(self, manifest_cls=JinjaManifest, entry_cls=JinjaManifestEntry):
         """Initialize manifest loader."""
-        super(JinjaManifestLoader, self).__init__(
-            manifest_cls=manifest_cls, entry_cls=entry_cls
-        )
+        super().__init__(manifest_cls=manifest_cls, entry_cls=entry_cls)
 
     def load(self, filepath):
         """Load a manifest from a file."""
         if current_app.debug or filepath not in JinjaManifestLoader.cache:
-            JinjaManifestLoader.cache[filepath] = super(JinjaManifestLoader, self).load(
-                filepath
-            )
+            JinjaManifestLoader.cache[filepath] = super().load(filepath)
         return JinjaManifestLoader.cache[filepath]
