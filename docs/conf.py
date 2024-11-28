@@ -10,12 +10,6 @@
 
 """Sphinx configuration."""
 
-from __future__ import print_function
-
-import sys
-
-import sphinx.environment
-
 from flask_webpackext import __version__
 
 # -- General configuration ------------------------------------------------
@@ -323,8 +317,6 @@ texinfo_documents = [
 intersphinx_mapping = {
     "python": ("https://docs.python.org/", None),
     "pywebpack": ("https://pywebpack.readthedocs.io/en/latest/", None),
-    # TODO: Configure external documentation references, eg:
-    # 'Flask-Admin': ('https://flask-admin.readthedocs.io/en/latest/', None),
 }
 
 # Autodoc configuraton.

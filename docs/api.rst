@@ -4,12 +4,6 @@ API Docs
 .. automodule:: flask_webpackext.ext
     :members:
 
-Proxies
--------
-
-.. automodule:: flask_webpackext.proxies
-    :members:
-
 Manifest
 --------
 
