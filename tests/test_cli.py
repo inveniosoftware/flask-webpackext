@@ -9,15 +9,11 @@
 
 """Module tests."""
 
-from __future__ import absolute_import, print_function
-
 from os.path import exists, join
 
 import pytest
 from click.testing import CliRunner
-from flask import Flask
 
-from flask_webpackext import FlaskWebpackExt
 from flask_webpackext.cli import webpack
 
 

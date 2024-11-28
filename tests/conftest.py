@@ -9,8 +9,6 @@
 
 """Pytest configuration."""
 
-from __future__ import absolute_import, print_function
-
 import shutil
 import tempfile
 from os import makedirs
@@ -30,7 +28,7 @@ from flask_webpackext import (
 )
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture()
 def tmpdir():
     """Temporary directory."""
     path = tempfile.mkdtemp()
@@ -38,7 +36,7 @@ def tmpdir():
     shutil.rmtree(path)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def instance_path(tmpdir):
     """Temporary instance path."""
     f = join(tmpdir, "instance")
@@ -46,7 +44,7 @@ def instance_path(tmpdir):
     return f
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def static_folder(instance_path):
     """Static folder."""
     f = join(instance_path, "static")
@@ -54,7 +52,7 @@ def static_folder(instance_path):
     return f
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def manifest(static_folder):
     """Static folder."""
     src = join(dirname(__file__), "manifest.json")
@@ -64,7 +62,7 @@ def manifest(static_folder):
     return dst
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def app(instance_path, static_folder):
     """Flask application."""
     app_ = Flask("test", instance_path=instance_path, static_folder=static_folder)
@@ -72,20 +70,20 @@ def app(instance_path, static_folder):
     return app_
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture()
 def appctx(app):
     """App in application context."""
     with app.app_context():
         yield app
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def ext(app):
     """Extension instance."""
     return app.extensions["flask-webpackext"]
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def project_assets_dir(tmpdir):
     """Temporary project assets dir."""
     src = join(dirname(__file__), "assets")
@@ -94,7 +92,7 @@ def project_assets_dir(tmpdir):
     return dst
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def project(app, project_assets_dir):
     """Webpack project."""
     project = WebpackProject(project_assets_dir)
@@ -106,7 +104,7 @@ def project(app, project_assets_dir):
     return project
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def projecttpl(app):
     """Webpack project."""
     project = WebpackTemplateProject(__name__, "assets")
@@ -118,7 +116,7 @@ def projecttpl(app):
     return project
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def bundles():
     """Webpack bundles."""
     return (
@@ -127,7 +125,7 @@ def bundles():
     )
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def projectbundle(app, bundles):
     """Webpack bundle project."""
     project = WebpackBundleProject(__name__, "assetsbundle", bundles=bundles)
@@ -139,13 +137,13 @@ def projectbundle(app, bundles):
     return project
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def cli_obj(app):
     """Script info."""
-    return ScriptInfo(create_app=lambda info: app)
+    return ScriptInfo(create_app=lambda: app)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def runner():
     """CLI Runner."""
     return CliRunner()

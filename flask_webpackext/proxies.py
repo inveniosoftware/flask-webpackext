@@ -16,7 +16,5 @@ from werkzeug.local import LocalProxy
 current_webpack = LocalProxy(lambda: current_app.extensions["flask-webpackext"])
 """Proxy to current extension."""
 
-current_manifest = LocalProxy(
-    lambda: current_app.extensions["flask-webpackext"].manifest
-)
+current_manifest = LocalProxy(lambda: current_webpack.manifest)
 """Proxy to current manifest."""
