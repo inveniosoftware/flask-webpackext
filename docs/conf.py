@@ -321,3 +321,5 @@ intersphinx_mapping = {
 
 # Autodoc configuraton.
 autoclass_content = "both"
+
+nitpick_ignore = [("py:func", "flask_webpackext.project.flask_config")]
