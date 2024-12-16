@@ -14,16 +14,83 @@ from os.path import join
 
 from flask import current_app
 from flask.helpers import get_root_path
+from pynpm import NPMPackage
 from pywebpack import WebpackBundleProject as PyWebpackBundleProject
 from pywebpack import WebpackTemplateProject as PyWebpackTemplateProject
+from pywebpack.helpers import cached
+from werkzeug.utils import import_string
 
-from .proxies import current_webpack
+
+class PNPMPackage(NPMPackage):
+    """Change to pnpm."""
+
+    def __init__(self, filepath, npm_bin="pnpm", commands=None, shell=False):
+        """Construct."""
+        super().__init__(
+            filepath=filepath, npm_bin=npm_bin, commands=commands, shell=shell
+        )
+
+    def _run_npm(self, command, *args, **kwargs):
+        """Run an NPM command.
+
+        By default the call is blocking until NPM is finished and output
+        is directed to stdout. If ``wait=False`` is passed to the method,
+        you get a handle to the process (return value of ``subprocess.Popen``).
+
+        :param command: NPM command to run.
+        :param args: List of arguments.
+        :param wait: Wait for NPM command to finish. By defaul
+        """
+        if command == "install":
+            args = ["--shamefully-hoist"]
+
+        return super()._run_npm(command, *args, **kwargs)
 
 
-def flask_config():
-    """Flask configuration injected in Webpack.
+class _PathStorageMixin:
+    """Mixin class."""
 
-    :return: Dictionary which contains the information Flask-WebpackExt knows
+    @property
+    def path(self):
+        """Get path to project."""
+        try:
+            return self.app.config["WEBPACKEXT_PROJECT_BUILDDIR"]
+        except KeyError:
+            return join(self.app.instance_path, "assets")
+
+    @property
+    def dist_dir(self):
+        """Get dist dir."""
+        try:
+            return self.app.config["WEBPACKEXT_PROJECT_DISTDIR"]
+        except KeyError:
+            return join(self.app.static_folder, "dist")
+
+    @property
+    def project(self):
+        project = self.app.config["WEBPACKEXT_PROJECT"]
+        if isinstance(project, str):
+            return import_string(project)
+        return project
+
+    @property
+    @cached
+    def npmpkg(self):
+        """Get API to NPM package."""
+        return PNPMPackage(self.path)
+
+    @property
+    def storage_cls(self):
+        """Get storage class."""
+        cls_ = self.app.config["WEBPACKEXT_STORAGE_CLS"]
+        if isinstance(cls_, str):
+            return import_string(cls_)
+        return cls_
+
+    def flask_config(self):
+        """Flask configuration injected in Webpack.
+
+        :return: Dictionary which contains the information Flask-WebpackExt knows
         about a Webpack project and the absolute URLs for static files and
         assets. The dictionary consists of a key ``build`` with the following
         keys inside:
@@ -34,54 +101,41 @@ def flask_config():
         * ``assetsURL``: URL to access the built files.
         * ``staticPath``: Absolute path to the generated static directory.
         * ``staticURL``: URL to access the static files..
-    """
-    assets_url = current_app.config["WEBPACKEXT_PROJECT_DISTURL"]
-    if not assets_url.endswith("/"):
-        assets_url += "/"
-    static_url = current_app.static_url_path
-    if not static_url.endswith("/"):
-        static_url += "/"
+        """
+        assets_url = self.app.config["WEBPACKEXT_PROJECT_DISTURL"]
+        if not assets_url.endswith("/"):
+            assets_url += "/"
+        static_url = self.app.static_url_path
+        if not static_url.endswith("/"):
+            static_url += "/"
 
-    return {
-        "build": {
-            "debug": current_app.debug,
-            "context": current_webpack.project.path,
-            "assetsPath": current_app.config["WEBPACKEXT_PROJECT_DISTDIR"],
-            "assetsURL": assets_url,
-            "staticPath": current_app.static_folder,
-            "staticURL": static_url,
+        return {
+            "build": {
+                "debug": self.app.debug,
+                "context": self.project.path,
+                "assetsPath": self.app.config["WEBPACKEXT_PROJECT_DISTDIR"],
+                "assetsURL": assets_url,
+                "staticPath": self.app.static_folder,
+                "staticURL": static_url,
+            }
         }
-    }
 
-
-def flask_allowed_copy_paths():
-    """Get the allowed copy paths from the Flask application."""
-    return [
-        current_app.instance_path,
-        current_webpack.project.path,
-        current_app.static_folder,
-        current_app.config["WEBPACKEXT_PROJECT_DISTDIR"],
-    ]
-
-
-class _PathStorageMixin(object):
-    """Mixin class."""
-
-    @property
-    def path(self):
-        """Get path to project."""
-        return current_app.config["WEBPACKEXT_PROJECT_BUILDDIR"]
-
-    @property
-    def storage_cls(self):
-        """Get storage class."""
-        return current_webpack.storage_cls
+    def flask_allowed_copy_paths(self):
+        """Get the allowed copy paths from the Flask application."""
+        return [
+            self.app.instance_path,
+            self.path,
+            self.app.static_folder,
+            self.dist_dir,
+        ]
 
 
 class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
     """Flask webpack template project."""
 
-    def __init__(self, import_name, project_folder=None, config=None, config_path=None):
+    def __init__(
+        self, import_name, project_folder=None, config=None, config_path=None, app=None
+    ):
         """Initialize project.
 
         :param import_name: Name of the module where the
@@ -96,11 +150,13 @@ class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
             ``config.json``, this file is generated by
             :func:`flask_webpackext.project.flask_config`.
         """
+        self.app = app or current_app
         project_template_dir = join(get_root_path(import_name), project_folder)
+
         super().__init__(
             None,
             project_template_dir=project_template_dir,
-            config=config or flask_config,
+            config=config or self.flask_config,
             config_path=config_path,
         )
 
@@ -116,6 +172,7 @@ class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
         config=None,
         config_path=None,
         allowed_copy_paths=None,
+        app=None,
     ):
         """Initialize templated folder.
 
@@ -141,12 +198,15 @@ class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
         :param allowed_copy_paths: List of paths (absolute, or relative to
             the `config_path`) that are allowed for bundle copy instructions.
         """
+        self.app = app or current_app
         project_template_dir = join(get_root_path(import_name), project_folder)
+        config = config or self.flask_config
+        allowed_copy_paths = allowed_copy_paths or self.flask_allowed_copy_paths()
         super().__init__(
             None,
             project_template_dir=project_template_dir,
             bundles=bundles,
-            config=config or flask_config,
+            config=config,
             config_path=config_path,
-            allowed_copy_paths=allowed_copy_paths or flask_allowed_copy_paths,
+            allowed_copy_paths=allowed_copy_paths,
         )
