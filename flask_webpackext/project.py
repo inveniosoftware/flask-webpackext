@@ -14,6 +14,7 @@ from os.path import join
 
 from flask import current_app
 from flask.helpers import get_root_path
+from pynpm import NPMPackage, PNPMPackage
 from pywebpack import WebpackBundleProject as PyWebpackBundleProject
 from pywebpack import WebpackTemplateProject as PyWebpackTemplateProject
 from pywebpack.helpers import cached
@@ -45,6 +46,15 @@ class _PathStorageMixin:
         if isinstance(project, str):
             return import_string(project)
         return project
+
+    @property
+    def npmpkg(self):
+        """Get API to NPM package."""
+        js_packages_manager = self.app.config.get("JAVASCRIPT_PACKAGES_MANAGER", "npm")
+        if js_packages_manager == "pnpm":
+            return PNPMPackage(self.path)
+
+        return NPMPackage(self.path)
 
     @property
     def storage_cls(self):
