@@ -187,3 +187,13 @@ class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
             config_path=config_path,
             allowed_copy_paths=allowed_copy_paths,
         )
+
+    @property
+    @cached
+    def entry(self):
+        """Get webpack entry points."""
+        # this enables to use the bundle without the current_app context
+        for bundle in self.bundles:
+            bundle.app = self.app
+
+        return super().entry
