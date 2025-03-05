@@ -16,6 +16,7 @@ from flask import current_app
 from flask.helpers import get_root_path
 from pywebpack import WebpackBundleProject as PyWebpackBundleProject
 from pywebpack import WebpackTemplateProject as PyWebpackTemplateProject
+from pywebpack.helpers import cached
 
 from .proxies import current_webpack
 
@@ -64,8 +65,8 @@ def flask_allowed_copy_paths():
     ]
 
 
-class _PathStorageMixin(object):
-    """Mixin class."""
+class _PathStoragePackageMixin:
+    """Mixin class for overriding various properties of the base ``WebpackProject``."""
 
     @property
     def path(self):
@@ -77,8 +78,15 @@ class _PathStorageMixin(object):
         """Get storage class."""
         return current_webpack.storage_cls
 
+    @property
+    @cached
+    def npmpkg(self):
+        """Get API to the package for the configured package manager."""
+        npm_pkg_cls = current_webpack.npm_pkg_cls
+        return npm_pkg_cls(self.path)
 
-class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
+
+class WebpackTemplateProject(_PathStoragePackageMixin, PyWebpackTemplateProject):
     """Flask webpack template project."""
 
     def __init__(
@@ -109,7 +117,7 @@ class WebpackTemplateProject(_PathStorageMixin, PyWebpackTemplateProject):
         )
 
 
-class WebpackBundleProject(_PathStorageMixin, PyWebpackBundleProject):
+class WebpackBundleProject(_PathStoragePackageMixin, PyWebpackBundleProject):
     """Flask webpack bundle project."""
 
     def __init__(

@@ -4,6 +4,7 @@ Changes
 Version <next>
 
 - Take keyword args to projects and pass them to the super constructor
+- Add ``WEBPACKEXT_NPM_PKG_CLS`` variable to set the class to use for ``project.npmpkg``
 
 Version 2.0.0 (released 2024-11-28)
 

@@ -12,6 +12,7 @@
 
 from os.path import join
 
+from pynpm.package import NPMPackage
 from pywebpack import FileStorage
 from werkzeug.utils import import_string
 
@@ -52,6 +53,10 @@ class FlaskWebpackExt(object):
         app.config.setdefault(
             "WEBPACKEXT_MANIFEST_LOADER",
             JinjaManifestLoader,
+        )
+        app.config.setdefault(
+            "WEBPACKEXT_NPM_PKG_CLS",
+            NPMPackage,
         )
 
         for k in dir(config):
@@ -94,6 +99,14 @@ class _FlaskWebpackExtState(object):
     def storage_cls(self):
         """Default storage class."""
         cls_ = self.app.config["WEBPACKEXT_STORAGE_CLS"]
+        if isinstance(cls_, str):
+            return import_string(cls_)
+        return cls_
+
+    @property
+    def npm_pkg_cls(self):
+        """Default JS package manager class."""
+        cls_ = self.app.config["WEBPACKEXT_NPM_PKG_CLS"]
         if isinstance(cls_, str):
             return import_string(cls_)
         return cls_

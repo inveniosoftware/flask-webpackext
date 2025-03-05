@@ -12,6 +12,7 @@
 from os.path import exists, join
 
 from flask.helpers import get_root_path
+from pynpm.package import PNPMPackage
 
 from flask_webpackext.project import WebpackBundleProject
 
@@ -24,6 +25,12 @@ def test_project_path(app, projecttpl, appctx):
 def test_project_storage_cls(ext, projecttpl, appctx):
     """Test project path."""
     assert projecttpl.storage_cls == ext.storage_cls
+
+
+def test_npm_pkg_cls(app, projecttpl, appctx):
+    """Test JS package manager class."""
+    app.config["WEBPACKEXT_NPM_PKG_CLS"] = "pynpm.package:PNPMPackage"
+    assert isinstance(projecttpl.npmpkg, PNPMPackage)
 
 
 def test_bundle_project(projectbundle, appctx, static_folder):
