@@ -1,6 +1,10 @@
 Changes
 =======
 
+Version <next>
+
+- Take keyword args to projects and pass them to the super constructor
+
 Version 2.0.0 (released 2024-11-28)
 
 - Project: allows passing allowed_copy_paths to copy assets when building with
