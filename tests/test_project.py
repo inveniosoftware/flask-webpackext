@@ -11,6 +11,10 @@
 
 from os.path import exists, join
 
+from flask.helpers import get_root_path
+
+from flask_webpackext.project import WebpackBundleProject
+
 
 def test_project_path(app, projecttpl, appctx):
     """Test project path."""
@@ -39,3 +43,13 @@ def test_bundle_project(projectbundle, appctx, static_folder):
     assert all([not exists(join(out, f)) for f in files])
     p.build()
     assert all([exists(join(out, f)) for f in files])
+
+
+def test_super_constructor_kwargs():
+    """Test if passing keyword arguments to the super constructor works."""
+    project = WebpackBundleProject(
+        __name__, "project", package_json_source_path="paket.json"
+    )
+    assert project.package_json_source_path == join(
+        get_root_path(__name__), "project", "paket.json"
+    )
