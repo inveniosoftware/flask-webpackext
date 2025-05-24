@@ -2,6 +2,7 @@
 #
 # This file is part of Flask-WebpackExt
 # Copyright (C) 2017 CERN.
+# Copyright (C) 2025 Graz University of Technology.
 #
 # Flask-WebpackExt is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -9,6 +10,7 @@
 
 """Module tests."""
 
+import importlib.metadata
 from os.path import exists, join
 
 import pytest
@@ -21,7 +23,11 @@ def test_webpack(project):
     """Test webpack command."""
     runner = CliRunner()
     result = runner.invoke(webpack)
-    assert result.exit_code == 0
+    if importlib.metadata.version("click") < "8.2.0":
+        # click >= 8.2.0 dropped python3.9 support
+        assert result.exit_code == 0
+    else:
+        assert result.exit_code == 2
 
 
 @pytest.mark.parametrize("cmd", ["create", "clean"])
