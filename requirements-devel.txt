@@ -1,5 +1,0 @@
-# SPDX-FileCopyrightText: 2017 CERN.
-# SPDX-License-Identifier: BSD-3-Clause
-
--e git+git://github.com/inveniosoftware/pynpm.git#egg=pynpm
--e git+git://github.com/inveniosoftware/pywebpack.git#egg=pywebpack
