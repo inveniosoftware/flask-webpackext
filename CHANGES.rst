@@ -1,6 +1,14 @@
 Changes
 =======
 
+Version 2.1.1 (released 2026-07-02)
+
+- chore(cleanup): remove unnecessary requirements-devel.txt
+- fix(tests): pin pytest
+- chore(setup): migrate from setuptools to hatchling
+- chore(licenses): update license headers to use SPDX
+- fix: click breaking changes
+
 Version 2.1.0 (released 2025-03-28)
 
 - Take keyword args to projects and pass them to the super constructor
